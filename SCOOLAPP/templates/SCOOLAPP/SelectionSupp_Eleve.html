@@ -1,0 +1,94 @@
+
+{% extends "SCOOLAPP/base.html" %}
+
+{% block titre %} Select profs to delete {% endblock %}
+
+
+{% block content %} 
+    <div class="blocBout">
+        <h1 class="titl">Vue sur les Elèves</h1>
+        <div class="boutt">
+            <a href="{% url 'Eleves' %}"></a><div class="create annul_next"><a href="{% url 'Eleves' %}">Annuler</a></div></a>
+            <p style="font-size: 19px; margin: 0;">  Selectionner le(s) Elève(s) à supprimer </p>
+            <a href="{% url 'validDelEleves' %}"></a><div class="delete annul_next"><a href="{% url 'validDelEleves' %}">Suivant</a></div></a>
+        </div>
+    </div>
+    <div class="Eltclas Eltclaspls" style="background-color: #eff3f5;">
+      <input type="checkbox" id="SelectAll" class="form-check-input" onclick="changeStateSlct('SelectAll')">
+      <label class="form-check-label" for="exampleCheck1" style="margin-left: 5px;">Tout selectionner</label>
+    </div>
+    <div class="LstProfs" id="VueEleves">
+      
+    </div>
+
+    <script type="text/javascript">
+      var lenE;
+      AfficheProfs();
+      $(document).ready(function(){
+        setInterval(AfficheProfs, 1000)   
+      })
+
+      function AfficheProfs(){
+        $.ajax({
+          type: 'GET',
+          url: "{%url 'GetdatasEleves' %}",
+          success: function(response){
+            console.log(response.databyelev.length);
+            lenE = response.databyelev.length
+            $('#VueEleves').empty();
+            state = true;
+            for(key in response.databyelev){
+                var temp= '<div class="barreHvc"></div>'
+                temp += '<div class="Eltclas Eltclaspls " style="justify-content: space-between;background-color:'
+                if (state){ temp += '#E3D7D7;">';}
+                else{ temp += '#D0DED1;">';}
+                state = !state;
+                temp += '<div class="detmodifC">'
+                if(response.databyelev[key].elev.state){
+                    temp +='<input type="checkbox" id="'+response.databyelev[key].elev.id+'" onclick="changeStateSlct(id)" checked>'
+                }
+                else{
+                    temp +='<input type="checkbox" id="'+response.databyelev[key].elev.id+'" onclick="changeStateSlct(id)">'
+                }
+                temp += '<label for="exampleCheck1" style="margin-left:15px;">\
+                    <div class="#"><span style="font-style: italic;">matricule : </span>  <span style="font-weight: bold;">'+response.databyelev[key].elev.MatriculeElev+'</span></div>\
+                            <div class="#"><span style="font-style: italic;">Nom : </span>  <span style="font-weight: bold;">'+response.databyelev[key].elev.nomElev+' '+response.databyelev[key].elev.prenomElev+'</span></div>\
+                            <div class="#"><span style="font-style: italic;">Classe : </span>  <span style="font-weight: bold;">'+response.databyelev[key].classe+'</span></div>\
+                            <div class="#"><span style="font-style: italic;">Telephone : </span><span style="font-weight: bold;">'+response.databyelev[key].elev.TelephoneElev+'</span></div>\
+                        </label>\
+                    </div>\
+                    <img class="photoprof" src="/media/'+response.databyelev[key].elev.photoElev+'">\
+                    </div>';
+                temp += '<div class="barreHvc"></div>'
+                $('#VueEleves').append(temp)
+            }
+          }
+        })  
+      }
+  
+      let SelectAll = document.getElementById("SelectAll")
+      SelectAll.addEventListener("click", () => {
+        for(i=1;i<=lenE;i++){
+          console.log(i)
+          let elt = document.getElementById(String(i))
+          if (SelectAll.checked){ elt.checked = true; }
+          else{elt.checked = false;}
+        }
+      })
+      
+      function changeStateSlct(iditem){
+        console.log(iditem);
+        let elt = document.getElementById(String(iditem))
+        $.ajax({
+          type: 'GET',
+          url: "{%url 'ChangStateEleves' %}",
+          data:{
+            idE: iditem,
+            stat: elt.checked,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success:function(){ console.log("Successs"); }
+        })
+      }
+  </script>
+{% endblock %}

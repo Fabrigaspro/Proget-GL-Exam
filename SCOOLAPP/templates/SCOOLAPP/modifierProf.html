@@ -1,0 +1,242 @@
+
+{% extends "SCOOLAPP/base.html" %}
+
+{% block titre %} Formulaire pour ajout prof {% endblock %}
+
+
+{% block content %} 
+    <form class="formclass" id="formulCC" action="{% url 'AddModifsProf' prof.id %}" method="post"
+        enctype="multipart/form-data" style="background-color: rgb(217, 217, 221);"> {% csrf_token %}
+
+        <div class="blocBout">
+            <h1 class="titl">Vue sur les professeurs</h1>
+            <div class="boutt">
+                <a href="{% url 'Professeurs' %}"></a><div class="create annul_next"><a href="{% url 'Professeurs' %}">Annuler</a></div></a>
+                <p style="font-size: 19px; margin: 0;">  Veillez renseigner les informations sur le nouveau professeur </p>
+                <button class="delete annul_next" type="button" onclick="Confirmcreate('{{prof.id}}')" style="border: 3px groove #F1853D;background-color: #F1853D;">enregistrer</button>
+            </div>
+        </div>
+
+        <div class="eltToAdd" style="display: flex; padding: 25px 0;">
+            <div class="block1AddPf" style="width: 50%;">
+                <div class="entCclss SSCLSS" style="margin-top: 80px;margin-bottom: 40px;">
+                    <div style="width: 30%;">
+                        <div class="barreHvc" style="width: 70%;"></div>
+                        <p>Matricule :</p>
+                        <div class="barreHvc" style="width: 70%;"></div>
+                    </div>
+                    <input type="text" name="Matricule" id="Matricule" required value="{{prof.MatriculeProf}}" style="width: 70%; margin-right: 3%;">
+                </div>
+                <div class="barreHvc" style="width: 100%;height: 5px;"></div>
+                <div class="entNclss SSCLSS" style="margin: 40px 0;">
+                    <div style="width: 30%;">
+                        <div class="barreHvc" style="width: 55%;"></div>
+                        <p>Nom :</p>
+                        <div class="barreHvc" style="width: 55%;"></div>
+                    </div>
+                    <input type="text" name="Nom" id="Nom" required value="{{prof.nomProf}}" style="width: 70%; margin-right: 3%;">
+                </div>
+                <div class="barreHvc" style="width: 100%;height: 5px;"></div>
+                <div class="entNclss SSCLSS" style="margin: 40px 0;">
+                    <div style="width: 30%;">
+                        <div class="barreHvc" style="width: 60%;"></div>
+                        <p>Email :</p>
+                        <div class="barreHvc" style="width: 60%;"></div>
+                    </div>
+                    <input type="email" name="email" id="email" required value="{{prof.EmailProf}}" style="width: 70%; margin-right: 3%;">
+                </div>
+            </div>
+            <div class="block2AddPf" style="width: 50%;">
+                <div class="entCclss SSCLSS" style="margin-top: 80px;margin-bottom: 40px;">
+                    <div style="width: 30%;">
+                        <div class="barreHvc" style="width: 70%;"></div>
+                        <p>Telephone :</p>
+                        <div class="barreHvc" style="width: 70%;"></div>
+                    </div>
+                    <input type="text" name="Telephone" id="Telephone" required value="{{prof.TelephoneProf}}" style="width: 70%; margin-right: 3%;">
+                </div>
+                <div class="barreHvc" style="width: 100%;height: 5px;"></div>
+                <div class="entNclss SSCLSS" style="margin: 40px 0;">
+                    <div style="width: 30%;">
+                        <div class="barreHvc" style="width: 53%;"></div>
+                        <p>Prénom :</p>
+                        <div class="barreHvc" style="width: 53%;"></div>
+                    </div>
+                    <input type="text" name="Prenom" id="Prenom" required value="{{prof.prenomProf}}" style="width: 70%; margin-right: 3%;">
+                </div>
+                <div class="barreHvc" style="width: 100%;height: 5px;"></div>
+                <div class="entNclss SSCLSS" style="margin: 40px 0;">
+                    <div style="width: 30%;">
+                        <div class="barreHvc" style="width: 50%;"></div>
+                        <p>Photo :</p>
+                        <div class="barreHvc" style="width: 50%;"></div>
+                    </div>
+                    <input type="file" name="Photo" id="Photo" required value="{{prof.photoProf.url}}" style="width: 70%; margin-right: 3%;">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        var isconfirm = false;
+        let idmat = document.getElementById("Matricule");
+        let idnom = document.getElementById("Nom");
+        let idprenom = document.getElementById("Prenom");
+        let idtel = document.getElementById("Telephone");
+        let idemail = document.getElementById("email");
+        let idimage = document.getElementById("Photo");
+    // evenements
+        idmat.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idmat.value == ""){idmat.style.borderColor = "red";}
+                else{idmat.style.borderColor = "black";}
+            }
+	    })
+        idnom.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idnom.value == ""){idnom.style.borderColor = "red";}
+                else{idnom.style.borderColor = "black";}
+            }
+	    })
+        idprenom.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idprenom.value == ""){idprenom.style.borderColor = "red";}
+                else{idprenom.style.borderColor = "black";}
+            }
+	    })
+        idtel.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idtel.value == ""){idtel.style.borderColor = "red";}
+                else{idtel.style.borderColor = "black";}
+            }
+	    })
+        idemail.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idemail.value == ""){idemail.style.borderColor = "red";}
+                else{idemail.style.borderColor = "black";}
+            }
+	    })
+        idimage.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idimage.value == ""){idimage.style.borderColor = "red";}
+                else{idimage.style.borderColor = "black";}
+            }
+	    })
+     
+        function Confirmcreate(idp) {
+            isconfirm = true;
+            if(idmat.value!="" & idnom.value!="" & idprenom.value!="" & idtel.value!=""& idemail.value!=""){
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/Professeur/GetdatasProfsbyidp/'+String(idp),
+                    success: function(response){
+                        var verif = true;
+                        for(key in response.Profs){
+                            if(response.Profs[key].MatriculeProf == idmat.value){verif = false;}
+                        }
+                        if( verif ){ 
+                            console.log("iciiii");
+                            let confirmation = document.getElementById("confirmation1");
+                            confirmation.style.display = "block"
+                            let main = document.getElementById("main");
+                            main.style.filter = "blur(4px)"
+                            return true
+                        }
+                        else{
+                            idmat.style.borderColor = "red";
+                            idmat.placeholder = "Champ obligatoire et unique !"
+                        }
+                    }
+                })
+            }
+            else{ 
+                if(idmat.value == ""){
+                    idmat.style.borderColor = "red";
+                    idmat.placeholder = "Champ obligatoire !"
+                }
+                if(idnom.value == ""){
+                    idnom.style.borderColor = "red";
+                    idnom.placeholder = "Champ obligatoire !"
+                }
+                if(idprenom.value == ""){
+                    idprenom.style.borderColor = "red";
+                    idprenom.placeholder = "Champ obligatoire !"
+                }
+                if(idtel.value == ""){
+                    idtel.style.borderColor = "red";
+                    idtel.placeholder = "Champ obligatoire !"
+                }
+                if(idemail.value == ""){
+                    idemail.style.borderColor = "red";
+                    idemail.placeholder = "Champ obligatoire !"
+                }
+                if(idimage.value == ""){
+                    idimage.style.borderColor = "red";
+                    idimage.placeholder = "Champ obligatoire !"
+                }
+                return false 
+            }
+            
+        }
+       
+        function change_annul(){
+            let boutAnnul = document.getElementById("annnulCC");
+            console.log("Annuler");
+            boutAnnul.style.border = "3px inset #928f8c";
+            boutAnnul.style.fontSize = "12px"
+            boutAnnul.style.letterSpacing= "0.3px";
+
+        }
+   </script>
+{% endblock %}
+
+{% block content2 %}
+    <div id="confirmation1" class="confirm confirm2">
+        <div class="uu">
+            <div class="confirm-main2">
+                <header class="confirm-header">
+                    <div id="out" style="margin-left: 85%;width: 10%;margin-bottom: 10px;"><a href="#">x</a></div>
+                </header>
+                <section class="confirm-section">
+                    Confirmez-vous la modification de ce professeur ?
+                </section>
+                <footer class="confirm-footer">
+                    <button class="bout annnulCC" id="annnulCC" > Annuler</button>
+                    <button class="bout confirmCC" id="confirmCC"> Confirmer</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script>
+        function onSend(){
+            var formul = document.getElementById("formulCC");
+            formul.submit();
+            console.log("action done !!!")
+        }
+        function oncancel(){
+            confirmation.style.display = "none";
+            let main = document.getElementById("main");
+            main.style.filter = "blur(0)"
+            console.log("annull !!!");
+        }
+        let boutConf = document.getElementById("confirmCC");
+        let confirmation = document.getElementById("confirmation1");
+        let boutAnnul = document.getElementById("annnulCC");
+        let outCroix = document.getElementById("out");
+        boutConf.addEventListener("click", () => {
+            onSend();
+        })
+        outCroix.addEventListener("click", () => {
+            oncancel();
+        })
+        boutAnnul.addEventListener("click", () => {
+            oncancel();
+        })
+        confirmation.addEventListener("click", () => {
+            oncancel();
+	    })
+        document
+            .querySelector(".confirm-main2")
+            .addEventListener("click", (e) => e.stopPropagation());
+    </script>
+{% endblock %}

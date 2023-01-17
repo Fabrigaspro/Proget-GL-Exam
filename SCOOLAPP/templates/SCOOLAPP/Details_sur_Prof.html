@@ -1,0 +1,66 @@
+{% extends "SCOOLAPP/base.html" %}
+
+{% block titre %} details sur classe {% endblock %}
+
+
+{% block content %} 
+    <div style="height: 100%;background-color: rgba(0, 0, 0, 0.747);padding-bottom: 100px;padding-top: 10px;">
+        <div class="Eltclas detmodifC" style="background-color: #6f8dbb;">
+            <div>
+                <div class="detprof"><span style="font-style: italic;">Code : </span>  <span style="font-weight: bold;">{{prof.MatriculeProf}}</span></div>
+                <div class="detprof"><span style="font-style: italic;">Nom : </span>  <span style="font-weight: bold;">{{prof.nomProf}} {{prof.prenomProf}}</span></div>
+                <div class="detprof"><span style="font-style: italic;">Type : </span>  <span style="font-weight: bold;">{{prof.TelephoneProf}}</span></div>
+                <div class="detprof"><span style="font-style: italic;">Type : </span>  <span style="font-weight: bold;">{{prof.EmailProf}}</span></div>
+            </div>
+            <button class="delete annul_next" type="button" onclick="allermodifier('{{prof.id}}')" style="margin: 57px 0;border: 3px groove #F1853D;background-color: #F1853D;">modifier</button>
+            <img class="photoprof" src="{{prof.photoProf.url}}" style="width: 150px;height: 150px;">
+        </div>
+
+        <a href="#"><h2 class="titlCrsProf" onclick="afficheClassesprf()"> mes cours </h2></a>
+        <div class="affichclassPf" id="affichclassPf">
+            <div style="display: flex;justify-content: space-around;">
+                <p style="color: blanchedalmond;margin: 0;">Total : {{countMat}}</p>
+                <div>
+                    <div style="display: flex;justify-content: space-between;">
+                        <h3 style="margin: 0 15px;">trier par </h3>
+                        <select id="TypeC" name="TypeC" style="height: 35px;">
+                            <option selected disabled value="">----------------------------------</option>
+                            <option>qqqqqqqqqqqqq</option>
+                            <option>qqqqqqqqqqqqq</option>
+                            <option>qqqqqqqqqqqqq</option>
+                            <option>qqqqqqqqqqqqq</option>
+                            <option>qqqqqqqqqqqqq</option>
+                            <option>qqqqqqqqqqqqq</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div>
+                nom : {{classe.nomClass}}
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script>
+        var changeAff = true;
+        function afficheClassesprf(){
+            let mesclasses = document.getElementById("affichclassPf")
+            if (changeAff){mesclasses.style.display = "block";}
+            else{mesclasses.style.display = "none";}
+            changeAff = !changeAff;
+        }
+    </script>
+
+
+
+    <script>
+        function allermodifier(idc){
+            console.log(idc)
+            url =  "/api/Professeur/ModifierProf/"+String(idc)
+            window.location.href= url
+        }
+    </script>
+{% endblock %} 

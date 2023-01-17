@@ -1,0 +1,137 @@
+﻿{% extends "SCOOLAPP/base.html" %}
+{% load static %}
+
+
+{% block header %}
+    <title>SCOOLAPP - Students - Add Students </title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'SCOOLAPP/images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'SCOOLAPP/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}">
+	
+	<!-- Pick date -->
+    <link rel="stylesheet" href="{% static 'SCOOLAPP/vendor/pickadate/themes/default.css' %}">
+    <link rel="stylesheet" href="{% static 'SCOOLAPP/vendor/pickadate/themes/default.date.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+                    
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Add Student</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'Acceuil' %}">Acceuil</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">Students</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">Add Student</a></li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Basic Info</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="#" method="post">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Nom</label>
+                                        <input type="text" id="Nom" name="Nom" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Prenom</label>
+                                        <input type="text" id="Prenom" name="Prenom" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Telephone</label>
+                                        <input type="text" id="Telephone" name="Telephone" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Date de naissance</label>
+                                        <input name="datepicker" class="datepicker-default form-control" id="datepicker">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Matricule</label>
+                                        <input type="text" id="Matricule" name="Matricule" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Classe</label>
+                                        <select class="form-control">
+                                            <option value="Class" disabled selected>----------------</option>
+                                            {% for class in classes %}
+                                                <option>{{class.nomClass}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Genre</label>
+                                        <select class="form-control">
+                                            <option value="Class" disabled selected>----------------</option>
+                                            <option value="Male">Masculin</option>
+                                            <option value="Female">Feminin</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group fallback w-100">
+                                        <label class="form-label">Photo</label>
+                                        <input type="file" class="dropify" data-default-file="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="reset" class="btn btn-light">Cencel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+{% endblock %}
+
+{% block scripts %}
+	<!-- Required vendors -->
+    <script src="{% static 'SCOOLAPP/vendor/global/global.min.js' %}"></script>
+	<script src="{% static 'SCOOLAPP/vendor/bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+    <script src="{% static 'SCOOLAPP/js/custom.min.js' %}"></script>
+    <script src="{% static 'SCOOLAPP/js/dlabnav-init.js' %}"></script>	
+
+	<!-- Datatable -->
+    <script src="{% static 'SCOOLAPP/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'SCOOLAPP/js/plugins-init/datatables.init.js' %}"></script>
+	
+    <!-- Svganimation scripts -->
+    <script src="{% static 'SCOOLAPP/vendor/svganimation/vivus.min.js' %}"></script>
+    <script src="{% static 'SCOOLAPP/vendor/svganimation/svg.animation.js' %}"></script>
+    <script src="{% static 'SCOOLAPP/js/styleSwitcher.js' %}"></script>
+	
+	<!-- pickdate -->
+    <script src="{% static 'SCOOLAPP/vendor/pickadate/picker.js' %}"></script>
+    <script src="{% static 'SCOOLAPP/vendor/pickadate/picker.time.js' %}"></script>
+    <script src="{% static 'SCOOLAPP/vendor/pickadate/picker.date.js' %}"></script>
+	
+	<!-- Pickdate -->
+    <script src="{% static 'SCOOLAPP/js/plugins-init/pickadate-init.js' %}"></script>
+
+{% endblock %}

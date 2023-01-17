@@ -1,0 +1,88 @@
+{% extends "SCOOLAPP/base.html" %}
+
+{% block titre %} Gestion Classes {% endblock %}
+
+
+{% block content %} 
+    <div class="blocBout">
+        <h1 class="titl">Vue sur les Eleves</h1>
+        <div class="boutt">
+            <a href="{%url 'FormAddEleve' %}"></a><div class="create"><a href="{%url 'FormAddEleve' %}">+ Ajouter élève</a></div></a>
+            <a href="{%url 'SelctDelEleves' %}"></a><div class="delete"><a href="{%url 'SelctDelEleves' %}">x Supprimer élève</a></div></a>
+        </div>
+    </div>
+
+    <div class="LstEleves" id="VueEleves">
+
+    </div>
+
+    <script type="text/javascript">
+        AfficheEleves();
+        $(document).ready(function(){
+          setInterval(AfficheEleves, 1000000)   
+        })
+    
+        function AfficheEleves(){
+          $.ajax({
+            type: 'GET',
+            url: "{%url 'GetdatasEleves' %}",
+            success: function(response){
+              console.log(response)
+              $('#VueEleves').empty();
+              state = true;
+              var temp= '<div class="barreHvc"></div>'
+              $('#VueEleves').append(temp)
+              for(key in response.databyelev){
+                var temp = '<a href="/api/Professeur/'+response.databyelev[key].elev.id+'">'
+                temp += '<div class="Eltclas detmodifC" style="background-color:'
+                if (state){ temp += '#E3D7D7;">';}
+                else{ temp += '#D0DED1;">';}
+                state = !state;
+                temp +='<div>\
+                            <div class="#"><span style="font-style: italic;">matricule : </span>  <span style="font-weight: bold;">'+response.databyelev[key].elev.MatriculeElev+'</span></div>\
+                            <div class="#"><span style="font-style: italic;">Nom : </span>  <span style="font-weight: bold;">'+response.databyelev[key].elev.nomElev+' '+response.databyelev[key].elev.prenomElev+'</span></div>\
+                            <div class="#"><span style="font-style: italic;">Classe : </span>  <span style="font-weight: bold;">'+response.databyelev[key].classe+'</span></div>\
+                            <div class="#"><span style="font-style: italic;">Telephone : </span><span style="font-weight: bold;">'+response.databyelev[key].elev.TelephoneElev+'</span></div>\
+                        </div>\
+                        <img class="photoprof" src="/media/'+response.databyelev[key].elev.photoElev+'">'
+                temp += '</div></a>';
+                temp += '<div class="barreHvc"></div>'
+                $('#VueEleves').append(temp)
+              }
+            }
+          })  
+        }
+    </script>
+{% endblock %}
+
+{% block content2 %} 
+  {% if infobuleConfirm or infobuleConfirmCreat %}
+      <div id="confirmation" class="confirm confirm1" onclick="gotogestprofs()">
+          <div class="confirm-main1">
+            <header>
+              <div onclick="gotogestprofs()" style="margin-left: 80%;width: 10%;margin-bottom: 10px;"><a href="#">x</a></div>
+            </header>
+            <section>
+                {% if infobuleConfirm %}
+                    <p style="margin: 0;padding: 3px 20px;">Suppression effectuée avec succès !</p>
+                {% elif infobuleConfirmCreat %}
+                    <p style="margin: 0;padding: 3px 20px;">Elève ajouté avec succès !</p>
+                {% endif %}
+            </section>  
+          </div>
+      </div>
+    <script type="text/javascript">
+          let confirmation = document.getElementById("main");
+          confirmation.style.filter = "blur(4px)"
+          document
+            .querySelector(".confirm-main1")
+            .addEventListener("click", (e) => e.stopPropagation());
+    </script>
+  {% endif %}
+  <script type="text/javascript"> 
+      function gotogestprofs(){
+          url =  "/Eleves/"
+          window.location.href= url
+      }
+  </script>
+{% endblock %}

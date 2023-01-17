@@ -1,0 +1,91 @@
+
+{% extends "SCOOLAPP/base.html" %}
+
+{% block titre %} Gestion Classes {% endblock %}
+
+
+{% block content %} 
+    <div class="blocBout">
+        <h1 class="titl">Vue sur les classes</h1>
+        <div class="boutt">
+            <a href="{% url 'classes' %}"></a><div class="create annul_next"><a href="{% url 'classes' %}">Annuler</a></div></a>
+            <p style="font-size: 19px; margin: 0;">  Selectionner le(s) classe(s) à supprimer </p>
+            <a href="{% url 'validDelclasses' %}"></a><div class="delete annul_next"><a href="{% url 'validDelclasses' %}">Suivant</a></div></a>
+        </div>
+    </div>
+    <div class="Eltclas Eltclaspls" style="background-color: #eff3f5;">
+      <input type="checkbox" id="SelectAll" class="form-check-input" onclick="changeStateSlct('SelectAll')">
+      <label class="form-check-label" for="exampleCheck1" style="margin-left: 5px;">Tout selectionner</label>
+    </div>
+    <div class="LstClass" id="VueClasses">
+      
+    </div>
+
+    <script type="text/javascript">
+      var lenC;
+      AfficheClasses();
+      $(document).ready(function(){
+        setInterval(AfficheClasses, 2000)   
+      })
+
+      function AfficheClasses(){
+        $.ajax({
+          type: 'GET',
+          url: "{%url 'Getdatasclasses' %}",
+          success: function(response){
+            lenC = response.Classes.length
+            $('#VueClasses').empty();
+            state = true;
+            for(key in response.Classes){
+              var temp= '<div class="barreHvc"></div>'
+              temp= '<div class="Eltclas Eltclaspls" style="background-color:'
+              if (state){ temp += '#C67373;">';}
+              else{ temp += '#AE9A9A;">';}
+              state = !state;
+              if(response.Classes[key].state){
+                temp +='<input type="checkbox" id="'+response.Classes[key].id+'" class="form-check-input" onclick="changeStateSlct(id)" checked>'
+              }
+              else{
+                temp +='<input type="checkbox" id="'+response.Classes[key].id+'" class="form-check-input" onclick="changeStateSlct(id)">'
+              }
+              temp += '<label class="form-check-label" for="exampleCheck1">\
+                        <div style="margin-left:10px;">\
+                          <div class="#"><span style="font-style: italic;">Classe</span>  <span style="font-weight: bold;">'+response.Classes[key].codeClass+'</span></div>\
+                          <div class="#"><span style="font-style: italic;">Nommée</span>  <span style="font-weight: bold;">'+response.Classes[key].nomClass+'</span></div>\
+                          <div class="#">'+response.Classes[key].descrpClass+'</div>\
+                        </div>\
+                      </label>\
+                    </div>';
+              temp += '<div class="barreHvc"></div>'
+              $('#VueClasses').append(temp)
+            }
+          }
+        })  
+      }
+  
+      let SelectAll = document.getElementById("SelectAll")
+      SelectAll.addEventListener("click", () => {
+        for(i=1;i<=lenC;i++){
+          console.log(i)
+          let elt = document.getElementById(String(i))
+          if (SelectAll.checked){ elt.checked = true; }
+          else{elt.checked = false;}
+        }
+      })
+      
+      function changeStateSlct(iditem){
+        console.log(iditem);
+        let elt = document.getElementById(String(iditem))
+        $.ajax({
+          type: 'GET',
+          url: "{%url 'ChangStatclass' %}",
+          data:{
+            idC: iditem,
+            stat: elt.checked,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success:function(){ }
+        })
+      }
+   </script>
+{% endblock %}

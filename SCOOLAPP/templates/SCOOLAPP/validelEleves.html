@@ -1,0 +1,27 @@
+
+{% extends "SCOOLAPP/base.html" %}
+
+{% block titre %} confirm delete Eleves {% endblock %}
+
+
+{% block content %} 
+            <div class="blocBout">
+                <h1 class="titl">Vue sur les Elèves</h1>
+                <div class="boutt">
+                    <a href="{%url 'SelctDelEleves' %}"></a><div class="create annul_next"><a href="{%url 'SelctDelEleves' %}">Annuler</a></div></a>
+                    <p style="font-size: 19px; margin: 0;">  Confirmer la suppression des élèves selectionnés </p>
+                    <a href="{%url 'deleteEleves' %}"></a><div class="delete annul_next"><a href="{%url 'deleteEleves' %}">confirmer</a></div></a>
+                </div>
+            </div>
+            <div class="LstClass" id="VueClasses">
+                {% for elev in eleves %}
+                    <div class="barreHvc"></div>
+                    <div class="Eltclas" style="background-color: #AE9A9A;">
+                        <div class="#"><span style="font-style: italic;">Matricule </span>  <span style="font-weight: bold;">{{elev.MatriculeElev}} : <span style="font-weight: bold;">{{elev.nomElev}}  {{elev.prenomElev}}</span></span></div>
+                    </div>
+                    <div class="barreHvc"></div>
+                {% endfor %}
+            </div>
+{% endblock %}
+
+
