@@ -15,4 +15,8 @@ urlpatterns = [
     path('Professeur/GetdatasProfsbyidp/<int:idProf>', GetdatasProfsbyidp, name="GetdatasProfsbyidp"),
     path('Professeur/AddModifsProf/<int:idProf>', AddModifsProf, name="AddModifsProf"),
 
+    path('Eleves/ModifierEleves/<int:idElev>', ModifierElev, name="ModifierElev"),
+
+    
+
 ]

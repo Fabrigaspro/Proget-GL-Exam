@@ -4,8 +4,6 @@
 
 {% block header %}
     <title>SCOOLAPP - Students - All Students </title>
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'SCOOLAPP/images/favicon.png' %}">
-    <link rel="stylesheet" href="{% static 'SCOOLAPP/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}">
 	<!-- Datatable -->
     <link href="{% static 'SCOOLAPP/vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
 {% endblock %}
@@ -61,9 +59,8 @@
 													<td><a href="javascript:void(0);"><strong>{{elev.TelephoneElev}}</strong></a></td>
 													<td>{{elev.ClassElev}}</td>
 													<td>{{elev.dateNaisElev}}</td>
-													<td>2011/04/25</td>
 													<td>
-														<a href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
+														<a href="{%url 'ModifierElev' elev.id %}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
 														<a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
 													</td>												
 												</tr>

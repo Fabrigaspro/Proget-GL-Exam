@@ -6,7 +6,8 @@ from django.http import JsonResponse,  HttpResponse
 
 def acceuil(Request):
     CountE = Eleve.objects.all().count()
-    datas = {"CountE":CountE}
+    CountClasses = Classe.objects.all().count()
+    datas = {"CountE":CountE,"CountClasses":CountClasses}
     return render(Request, "SCOOLAPP/acceuil.html",datas)
 
 
@@ -249,7 +250,29 @@ def FormAddEleve(Request):
     datas = {"classes":classes}
     return render(Request, "SCOOLAPP/Add-student.html",datas)
 
-    
+def AddnewEleve(Request):
+    if Request.method == "POST":
+        Matricule = Request.POST["Matricule"]
+        Nom = Request.POST["Nom"]
+        Prenom = Request.POST["Prenom"]
+        Telephone = Request.POST["Telephone"]
+        nomclass = Request.POST["Classe"]
+        Datnaiss = Request.POST["Datnaiss_submit"]
+        Genre = Request.POST["Genre"]
+        Photo = Request.FILES["Photo"]
+    classe = Classe.objects.get(nomClass=nomclass)
+    print(Datnaiss,"------",Genre)
+    newEleve = Eleve(MatriculeElev=Matricule, nomElev=Nom, prenomElev=Prenom, dateNaisElev=Datnaiss, genreElev=Genre, TelephoneElev=Telephone, ClassElev=classe, photoElev=Photo)
+    newEleve.save()
+    data = {"infobuleConfirmCreat": True}
+    return ViewsEleves(Request)
+
+def ModifierElev(Request, idElev):
+    classes = Classe.objects.all()
+    elev = Eleve.objects.get(id= idElev)
+    datas = {"elev":elev,"classes":classes}
+    return render(Request, "SCOOLAPP/edit-student.html",datas)
+
 def ChangStateEleves(Request):
     if Request.method == "GET":
         IDS = Request.GET["idE"]
@@ -287,20 +310,6 @@ def deleteEleves(Request):
     eleves.delete()
     data = {"infobuleConfirm": True}
     return render(Request, "SCOOLAPP/gestion_Eleves.html", data)  
-
-def AddnewEleve(Request):
-    if Request.method == "POST":
-        Matricule = Request.POST["Matricule"]
-        Nom = Request.POST["Nom"]
-        Prenom = Request.POST["Prenom"]
-        Telephone = Request.POST["Telephone"]
-        nomclass = Request.POST["classe"]
-        Photo = Request.FILES["Photo"]
-    classe = Classe.objects.get(nomClass=nomclass)
-    newEleve = Eleve(MatriculeElev=Matricule, nomElev=Nom, prenomElev=Prenom, TelephoneElev=Telephone, ClassElev=classe, photoElev=Photo)
-    newEleve.save()
-    data = {"infobuleConfirmCreat": True}
-    return render(Request, "SCOOLAPP/gestion_Eleves.html",data)
 
 
 #######################################################################################                                           

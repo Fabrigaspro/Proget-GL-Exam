@@ -37,7 +37,8 @@
                         <h5 class="card-title">Basic Info</h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="post">
+                        <form class="formul" method="post" action="{% url 'AddnewEleve' %}" id="formul"
+                                enctype="multipart/form-data" > {% csrf_token %}
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group">
@@ -60,7 +61,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label class="form-label">Date de naissance</label>
-                                        <input name="datepicker" class="datepicker-default form-control" id="datepicker">
+                                        <input name="Datnaiss" id="Datnaiss" class="datepicker-default form-control" id="datepicker">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12">
@@ -72,8 +73,8 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label class="form-label">Classe</label>
-                                        <select class="form-control">
-                                            <option value="Class" disabled selected>----------------</option>
+                                        <select class="form-control" name="Classe" id="Classe">
+                                            <option class="traitpoint" value="Class" disabled selected>----------------</option>
                                             {% for class in classes %}
                                                 <option>{{class.nomClass}}</option>
                                             {% endfor %}
@@ -83,8 +84,8 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label class="form-label">Genre</label>
-                                        <select class="form-control">
-                                            <option value="Class" disabled selected>----------------</option>
+                                        <select class="form-control" name="Genre" id="Genre">
+                                            <option class="traitpoint" value="Class" disabled selected>----------------</option>
                                             <option value="Male">Masculin</option>
                                             <option value="Female">Feminin</option>
                                         </select>
@@ -93,12 +94,12 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group fallback w-100">
                                         <label class="form-label">Photo</label>
-                                        <input type="file" class="dropify" data-default-file="">
+                                        <input type="file" name="Photo" id="Photo" class="form-control" class="dropify" >
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="reset" class="btn btn-light">Cencel</button>
+                                    <button type="button" class="btn btn-primary" onclick="Confirmcreate()">Submit</button>
+                                    <a href="{% url 'ViewsEleves' %}"><button type="button" class="btn btn-dark">Cancel</button></a>
                                 </div>
                             </div>
                         </form>
@@ -108,6 +109,135 @@
         </div>
         
     </div>
+    <script type="text/javascript">
+        let Tp = document.getElementById("traitpoint");
+        var isconfirm = false;
+        let idmat = document.getElementById("Matricule");
+        let idnom = document.getElementById("Nom");
+        let idprenom = document.getElementById("Prenom");
+        let idtel = document.getElementById("Telephone");
+        let idDatnaiss = document.getElementById("Datnaiss");
+        let idclass = document.getElementById("Classe");
+        let idGenre = document.getElementById("Genre");
+        let idimage = document.getElementById("Photo");
+    // evenements
+        idmat.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idmat.value == ""){idmat.style.borderColor = "red";}
+                else{idmat.style.borderColor = "green";}
+            }
+        })
+        idnom.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idnom.value == ""){idnom.style.borderColor = "red";}
+                else{idnom.style.borderColor = "green";}
+            }
+        })
+        idprenom.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idprenom.value == ""){idprenom.style.borderColor = "red";}
+                else{idprenom.style.borderColor = "green";}
+            }
+        })
+        idtel.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idtel.value == ""){idtel.style.borderColor = "red";}
+                else{idtel.style.borderColor = "green";}
+            }
+        })
+        idDatnaiss.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idDatnaiss.value == ""){idDatnaiss.style.borderColor = "red";}
+                else{idDatnaiss.style.borderColor = "green";}
+            }
+        })
+        idclass.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idclass.value == ""){idclass.style.borderColor = "red";Tp.style.color = "red";}
+                else{idclass.style.borderColor = "green";Tp.style.color = "black";}
+            }
+        })
+        idGenre.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idGenre.value == ""){idGenre.style.borderColor = "red";Tp.style.color = "red";}
+                else{idclidGenreass.style.borderColor = "green";Tp.style.color = "black";}
+            }
+        })
+        idimage.addEventListener("blur", () => {
+            if (isconfirm){
+                if(idimage.value == ""){idimage.style.borderColor = "red";}
+                else{idimage.style.borderColor = "green";}
+            }
+        })
+    
+        function Confirmcreate() {
+            isconfirm = true;
+            if(idmat.value!="" & idnom.value!="" & idprenom.value!="" & idtel.value!="" & idDatnaiss.value!="" & idclass.value!="" & idGenre.value!="" & idimage.value!=""){
+                $.ajax({
+                    type: 'GET',
+                    url: "{%url 'GetdatasEleves' %}",
+                    success: function(response){
+                        var verif = true;
+                        for(key in response.databyelev){
+                            console.log(response.databyelev[key].elev.MatriculeElev,"---",idmat.value)
+                            if(response.databyelev[key].elev.MatriculeElev == idmat.value){verif = false;}
+                        }
+                        if( verif ){ 
+                            console.log("iciiiiooo");
+                            let confirmation = document.getElementById("confirmation1");
+                            confirmation.style.display = "block"
+                            let main = document.getElementById("main");
+                            main.style.filter = "blur(4px)"
+                            return true
+                        }
+                        else{
+                            idmat.style.borderColor = "red";
+                            idmat.placeholder = "Champ obligatoire et unique !"
+                        }
+                    }
+                })
+            }
+            else{ 
+                if(idmat.value == ""){
+                    idmat.style.borderColor = "red";
+                    idmat.placeholder = "Champ obligatoire !"
+                }
+                if(idnom.value == ""){
+                    idnom.style.borderColor = "red";
+                    idnom.placeholder = "Champ obligatoire !"
+                }
+                if(idprenom.value == ""){
+                    idprenom.style.borderColor = "red";
+                    idprenom.placeholder = "Champ obligatoire !"
+                }
+                if(idtel.value == ""){
+                    idtel.style.borderColor = "red";
+                    idtel.placeholder = "Champ obligatoire !"
+                }
+                if(idDatnaiss.value == ""){
+                    idDatnaiss.style.borderColor = "red";
+                    idDatnaiss.placeholder = "Champ obligatoire !"
+                }
+                if(idclass.value == ""){
+                    idclass.style.borderColor = "red";
+                    Tp.append("Champ obligatoire !")   
+                    Tp.style.color = "red";
+                }
+                if(idGenre.value == ""){
+                    idGenre.style.borderColor = "red";
+                    idGenre.placeholder = "Champ obligatoire !"
+                    Tp.style.color = "red";
+                }
+                if(idimage.value == ""){
+                    idimage.style.borderColor = "red";
+                    idimage.placeholder = "Champ obligatoire !"
+                }
+                return false 
+            }
+            
+        }
+        </script>
+   
 {% endblock %}
 
 {% block scripts %}
@@ -134,4 +264,55 @@
 	<!-- Pickdate -->
     <script src="{% static 'SCOOLAPP/js/plugins-init/pickadate-init.js' %}"></script>
 
+{% endblock %}
+
+{% block content2 %}  
+    <div id="confirmation1" class="confirm confirm2">
+        <div class="uu">
+            <div class="confirm-main2">
+                <header class="confirm-header">
+                    <div id="out" style="margin-left: 85%;width: 10%;margin-bottom: 10px;"><a href="#">x</a></div>
+                </header>
+                <section class="confirm-section">
+                    Confirmez-vous la création de cette nouveau professeur ?
+                </section>
+                <footer class="confirm-footer">
+                    <button class="bout annnulCC" id="annnulCC" > Annuler</button>
+                    <button class="bout confirmCC" id="confirmCC"> Confirmer</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script>
+        function onSend(){
+            var formul = document.getElementById("formul");
+            formul.submit();
+            console.log("action done !!!")
+        }
+        function oncancel(){
+            confirmation.style.display = "none";
+            let main = document.getElementById("main");
+            main.style.filter = "blur(0)"
+            console.log("annull !!!");
+        }
+        let boutConf = document.getElementById("confirmCC");
+        let confirmation = document.getElementById("confirmation1");
+        let boutAnnul = document.getElementById("annnulCC");
+        let outCroix = document.getElementById("out");
+        boutConf.addEventListener("click", () => {
+            onSend();
+        })
+        outCroix.addEventListener("click", () => {
+            oncancel();
+        })
+        boutAnnul.addEventListener("click", () => {
+            oncancel();
+        })
+        confirmation.addEventListener("click", () => {
+            oncancel();
+        })
+        document
+            .querySelector(".confirm-main2")
+            .addEventListener("click", (e) => e.stopPropagation());
+    </script>
 {% endblock %}
