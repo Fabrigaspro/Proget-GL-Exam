@@ -746,11 +746,17 @@ def CreateWordElev(Request, idE):
     classe = Classe.objects.get(id = elev.ClassElev.id)
     AllElevclass = classe.eleve_set.all()
     for Elv in AllElevclass:
-        newbullletin = BulletinDeNote(eleve=Elv)
-        newbullletin.save()
-        newbullletin.Set_MoyGE()
+        try:
+            BulletinE = Elv.bulletindenote
+            BulletinE.Set_MoyGE()
+        except:
+            newbullletin = BulletinDeNote(eleve=Elv)
+            newbullletin.save()
+            newbullletin.Set_MoyGE()
+            
         
-    Bulletin = BulletinDeNote.objects.get(eleve=elev)
+    Bulletin = elev.bulletindenote
+
     dicoMoyByGE = Bulletin.Get_AllMoybyGroupE()
     
     MoyG = Bulletin.MoyG
@@ -760,14 +766,14 @@ def CreateWordElev(Request, idE):
     nomRangs = ["1er"]+[str(i)+"ème" for i in range(2,Eff+1)]
     MoyGAll = []
     AllMoyGA, AllMoyGB, AllMoyGC= [], [], []
+
     for Elv in AllElevclass:
-        resu = Elv.bulletindenote_set.get()
+        resu = Elv.bulletindenote
         MoyGAll.append(resu.MoyG)
         dicoMoyByG = resu.Get_AllMoybyGroupE()
         AllMoyGA.append(dicoMoyByG["MoyNotesGA"])
         AllMoyGB.append(dicoMoyByG["MoyNotesGB"])
         AllMoyGC.append(dicoMoyByG["MoyNotesGC"])
-
     MoyGAll.sort(reverse=True)
     AllMoyGA.sort(reverse=True)
     AllMoyGB.sort(reverse=True)
