@@ -1,0 +1,339 @@
+{% extends "app_Professors/baseProf.html" %}
+{% load static %}
+
+{% block header %}
+    <title>SCOOLAPP - Profile-professor </title>
+    <!-- Favicon icon -->
+    <link rel="stylesheet" href="{% static 'SCOOLAPP/vendor/jqvmap/css/jqvmap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'SCOOLAPP/vendor/chartist/css/chartist.min.css' %}">
+    <!-- Summernote -->
+    <link href="{% static 'SCOOLAPP/vendor/summernote/summernote.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'SCOOLAPP/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'SCOOLAPP/css/skin-3.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row page-titles mx-0">
+        <div class="col-sm-6 p-md-0">
+            <div class="welcome-text">
+                <h4>Salut</h4>
+                <p class="mb-0">Vous êtes dans votre compte utilisateur</p>
+            </div>
+        </div>
+        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">App</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Profile</a></li>
+            </ol>
+        </div>
+    </div>
+    <!-- row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="profile">
+                <div class="profile-head">
+                    <div class="photo-content">
+                        <div class="cover-photo" style="background: url({{Prof.photoProf.url}});"></div>
+                        
+                    </div>
+                    <div class="profile-info">
+                        
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="profile-photo">
+                                    <img src="{{Prof.photoProf.url}}" class="img-fluid rounded-circle" alt="">
+                                </div>
+                            </div>
+                            <div class="col-sm-9 col-12">
+                                <div class="row">
+                                    <div class="col-xl-4 col-sm-6 border-right-1">
+                                        <div class="profile-name">
+                                            <h4 class="text-primary mb-0">{{Prof.nomProf}} {{Prof.prenomProf}}</h4>
+                                            <p>{{Prof.DesignationProf}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-sm-6 border-right-1">
+                                        <div class="profile-email">
+                                            <h4 class="text-muted mb-0">{{Prof.EmailProf}}</h4>
+                                            <p>Email</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="profile-statistics">
+                        <div class="text-center mt-4 border-bottom-1 pb-3">
+                            <div class="row">
+                                <div class="col">
+                                    <h3 class="m-b-0">150</h3><span>Follower</span>
+                                </div>
+                                <div class="col">
+                                    <h3 class="m-b-0">140</h3><span>Place Stay</span>
+                                </div>
+                                <div class="col">
+                                    <h3 class="m-b-0">45</h3><span>Reviews</span>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <a href="javascript:void()" class="btn btn-primary px-5 mr-3 mb-4">Follow</a> 
+                                <a href="javascript:void()" class="btn btn-dark px-3 mb-4">Send Message</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="profile-tab">
+                        <div class="custom-tab-1">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item"><a href="#about-me" data-toggle="tab" class="nav-link active show">About Me</a>
+                                </li>
+                                <li class="nav-item"><a href="#profile-settings" data-toggle="tab" class="nav-link">Setting</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="about-me" class="tab-pane fade active show">
+                                    <div class="profile-about-me">
+                                        <div class="pt-4 border-bottom-1 pb-4">{{Prof.DescrptProf}}</div>
+                                    </div>
+                                    <div class="profile-skills pt-2 border-bottom-1 pb-2">
+                                        <h4 class="text-primary mb-4">Domaines de competances</h4>
+                                        {% for dom in Domaines %}
+                                            <a href="javascript:void()" class="btn btn-outline-dark btn-rounded px-4 my-3 my-sm-0 mr-3 m-b-10">{{dom}}</a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="profile-lang pt-5 border-bottom-1 pb-5">
+                                        <h4 class="text-primary mb-4">Language</h4><a href="javascript:void()" class="text-muted pr-3 f-s-16"><i class="flag-icon flag-icon-us"></i> English</a> <a href="javascript:void()" class="text-muted pr-3 f-s-16"><i class="flag-icon flag-icon-fr"></i> French</a>
+                                    </div>
+                                    <div class="profile-personal-info">
+                                        <h4 class="text-primary mb-4">Personal Information</h4>
+                                        <div class="row mb-4">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                <h5 class="f-w-500">Name <span class="pull-right">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{Prof.nomProf}} {{Prof.prenomProf}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                <h5 class="f-w-500">Telephone <span class="pull-right">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{Prof.TelephoneProf}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                <h5 class="f-w-500">Email <span class="pull-right">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{Prof.EmailProf}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                <h5 class="f-w-500">Age <span class="pull-right">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{Age}} ans</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                <h5 class="f-w-500">Location <span class="pull-right">:</span></h5>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{Prof.AdresseProf}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                <h5 class="f-w-500">Ancienneté <span class="pull-right">:</span></h5>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{AnnExp}} ans d'experiences</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="profile-settings" class="tab-pane fade">
+                                    <div class="pt-3">
+                                        <div class="settings-form">
+                                            <h3 class="text-primary">Account Setting</h3>
+                                            <br>
+                                            <h4 class="text-primary">About options connection</h4>
+                                            <form method="post" action="{% url 'ModifCompteProf'%}" id="formul"
+                                                enctype="multipart/form-data" > {% csrf_token %}
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Username</label>
+                                                        <input type="text" name="Username" placeholder="Username" class="form-control">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Password</label>
+                                                        <input type="password" name="Password" placeholder="Password" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Email</label>
+                                                    <input type="email" name="Email" placeholder="Email" class="form-control">
+                                                </div>
+                                                <button class="btn btn-primary" type="submit">Sign
+                                                    in</button>
+                                            </form>
+                                            <br>
+                                            <h4 class="text-primary">About personnel profile</h4>
+                                            <form method="post" action="{% url 'ModifProfileProf'%}" id="formul"
+                                                enctype="multipart/form-data" > {% csrf_token %}
+                                                
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Nom</label>
+                                                            <input type="text" id="Nom" name="Nom" class="form-control" placeholder="Nom">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Prenom</label>
+                                                            <input type="text" id="Prenom" name="Prenom" class="form-control" placeholder="Prenom">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Telephone</label>
+                                                        <input type="text" name="Telephone" placeholder="+237 ........" class="form-control">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Email</label>
+                                                        <input type="email" name="Email" placeholder="exple: abc@gmail.com" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Date de naissance</label>
+                                                        <input name="Datnaiss" id="Datnaiss" class="datepicker-default form-control" id="datepicker1" value="{{prof.dateNaisProf}}">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Adresse</label>
+                                                        <input type="email" name="Adresse" placeholder="exple: Douala, Bonamoussadi Rue 45" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Description</label>
+                                                        <textarea class="form-control" name="Descrpt" id="Descrpt" rows="5"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <div class="form-group fallback w-100">
+                                                        <label class="form-label">Photo</label>
+                                                        <input type="file" name="Photo" id="Photo" class="dropify" data-default-file="">
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+	
+    <!-- Svganimation scripts -->
+    <script src="{% static 'SCOOLAPP/vendor/svganimation/vivus.min.js' %}"></script>
+    <script src="{% static 'SCOOLAPP/vendor/svganimation/svg.animation.js' %}"></script>
+    <script src="{% static 'SCOOLAPP/js/styleSwitcher.js' %}"></script>
+
+
+{% endblock %}
+
+{% block content2 %}  
+    <div id="confirmation1" class="confirm confirm2">
+        <div class="uu">
+            <div class="confirm-main2">
+                <header class="confirm-header">
+                    <div id="out" style="margin-left: 85%;width: 10%;margin-bottom: 10px;"><a href="#"><i class="fa fa-close color-danger"></i></a></div>
+                </header>
+                <section class="confirm-section">
+                    Confirmez-vous les Suppression de <span id="NP" style="color: red;font-weight: bold;"></span> ?
+                </section>
+                <footer class="confirm-footer">
+                    <button class="bout annnulCC" id="annnulCC" > Annuler</button>
+                    <button class="bout confirmCC" id="confirmCC"> Confirmer</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script>
+		var idClass; 
+		function confirmDeletion(idC) {
+			let confirmation = document.getElementById("confirmation1");
+			idClass = idC;
+			console.log(String(idC)+"-P","#####################",String(idC)+"-N")
+			let NomTd = document.getElementById(String(idC)+"-D");
+			let SpanNP = document.getElementById("NP");
+			var temp = NomTd.innerHTML;
+			$('#NP').empty();
+			$('#NP').append(temp);
+
+			confirmation.style.display = "block";
+			let main = document.getElementById("bodyy");
+			main.style.filter = "blur(4px)";
+			console.log(idClass)
+			return true
+		}
+        function onSend(){
+			url = "/api/classes/deleteClasse/"+String(idClass);
+			window.location.href= url
+        }
+ 
+		function oncancel(){
+            confirmation.style.display = "none";
+            let main = document.getElementById("bodyy");
+            main.style.filter = "blur(0)"
+            console.log("annull !!!");
+        }
+        let boutConf = document.getElementById("confirmCC");
+        let confirmation = document.getElementById("confirmation1");
+        let boutAnnul = document.getElementById("annnulCC");
+        let outCroix = document.getElementById("out");
+        boutConf.addEventListener("click", () => {
+            onSend();
+        })
+        outCroix.addEventListener("click", () => {
+            oncancel();
+        })
+        boutAnnul.addEventListener("click", () => {
+            oncancel();
+        })
+        confirmation.addEventListener("click", () => {
+            oncancel();
+        })
+        document
+            .querySelector(".confirm-main2")
+            .addEventListener("click", (e) => e.stopPropagation());
+    </script>
+{% endblock %}
+

@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'SCOOLAPP.apps.ScoolappConfig',
+    'app_Professors.apps.AppProfessorsConfig',
+    'app_login.apps.AppLoginConfig',
 ]
 
 MIDDLEWARE = [
@@ -119,6 +121,8 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
+
+LOGIN_URL = 'PageLogin'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"

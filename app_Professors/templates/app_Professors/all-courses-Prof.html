@@ -1,0 +1,133 @@
+﻿{% extends "app_Professors/baseProf.html" %}
+{% load static %}
+
+
+{% block header %}
+    <title>
+		SCOOLAPP - Courses - All Courses 
+	</title>
+	<!-- Datatable -->	
+	<link href="{% static 'SCOOLAPP/vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <!-- row -->
+    <div class="container-fluid">
+                        
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>All Courses </h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{%url 'acceuilAdmin' %}">Acceui</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">Courses</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">All Courses</a></li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for Mat in Matieres %}
+                <div class="col-xl-3 col-xxl-4 col-lg-4 col-md-6 col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 id="{{Mat.id}}-N">{{Mat.nomMat}}</h4>
+                            <ul class="list-group mb-3 list-group-flush">
+                                <li class="list-group-item px-0 d-flex justify-content-between">
+                                    <span class="mb-0">Code du cours :</span><strong>{{Mat.CodeMat}}</strong></li>
+                                <li class="list-group-item px-0 d-flex justify-content-between">
+                                    <span class="mb-0">Classe :</span><strong>{{Mat.getClassMat}}</strong></li>
+                                <li class="list-group-item px-0 d-flex justify-content-between">
+                                    <span class="mb-0">Professor :</span><strong>{{Mat.ProfMat}}</strong></li>
+                                <li class="list-group-item px-0 d-flex justify-content-between">
+                                    <span><i class="fa fa-graduation-cap text-primary mr-2"></i>Students</span><strong>{{Mat.get_TotElev_ClassMat}}</strong></li>
+                            </ul>
+                            <a href="{%url 'details_Cours_Prof' Mat.id %}" class="btn btn-warning">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    <!-- Svganimation scripts -->
+    <script src="{% static 'SCOOLAPP/vendor/svganimation/vivus.min.js' %}"></script>
+    <script src="{% static 'SCOOLAPP/vendor/svganimation/svg.animation.js' %}"></script>
+    <script src="{% static 'SCOOLAPP/js/styleSwitcher.js' %}"></script>
+
+
+{% endblock %}
+
+{% block content2 %}  
+    <div id="confirmation1" class="confirm confirm2">
+        <div class="uu">
+            <div class="confirm-main2">
+                <header class="confirm-header">
+                    <div id="out" style="margin-left: 85%;width: 10%;margin-bottom: 10px;"><a href="#"><i class="fa fa-close color-danger"></i></a></div>
+                </header>
+                <section class="confirm-section">
+                    Confirmez-vous les Suppression du cours intitulé <span id="NP" style="color: red;font-weight: bold;"></span> ?
+                </section>
+                <footer class="confirm-footer">
+                    <button class="bout annnulCC" id="annnulCC" > Annuler</button>
+                    <button class="bout confirmCC" id="confirmCC"> Confirmer</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script>
+		var idCours; 
+		function confirmDeletion(idC) {
+			let confirmation = document.getElementById("confirmation1");
+			idCours = idC;
+			let NomTd = document.getElementById(String(idC)+"-N");
+			let SpanNP = document.getElementById("NP");
+			var temp = NomTd.innerHTML;
+			$('#NP').empty();
+			$('#NP').append(temp);
+
+			confirmation.style.display = "block";
+			let main = document.getElementById("bodyy");
+			main.style.filter = "blur(4px)";
+			console.log(idCours)
+			return true
+		}
+        function onSend(){
+			url = "/api/Cours/deleteCours/"+String(idCours);
+			window.location.href= url
+        }
+ 
+		function oncancel(){
+            confirmation.style.display = "none";
+            let main = document.getElementById("bodyy");
+            main.style.filter = "blur(0)"
+            console.log("annull !!!");
+        }
+        let boutConf = document.getElementById("confirmCC");
+        let confirmation = document.getElementById("confirmation1");
+        let boutAnnul = document.getElementById("annnulCC");
+        let outCroix = document.getElementById("out");
+        boutConf.addEventListener("click", () => {
+            onSend();
+        })
+        outCroix.addEventListener("click", () => {
+            oncancel();
+        })
+        boutAnnul.addEventListener("click", () => {
+            oncancel();
+        })
+        confirmation.addEventListener("click", () => {
+            oncancel();
+        })
+        document
+            .querySelector(".confirm-main2")
+            .addEventListener("click", (e) => e.stopPropagation());
+    </script>
+{% endblock %}

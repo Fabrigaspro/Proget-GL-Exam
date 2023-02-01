@@ -22,7 +22,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('SCOOLAPP.urls')),
+    path('AdminSCOOLAPP/', include('SCOOLAPP.urls')),
     path('api/', include('SCOOLAPP.urls_api')),
+    path('', include('app_login.urls')),
+    path('ProfsSCOOLAPP/', include('app_Professors.urls')),
     
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

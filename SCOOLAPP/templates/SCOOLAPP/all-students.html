@@ -1,9 +1,19 @@
-﻿{% extends "SCOOLAPP/base.html" %}
+﻿{% extends "SCOOLAPP/baseAdmin.html" %}
 {% load static %}
 
 
 {% block header %}
-    <title>SCOOLAPP - Students - All Students </title>
+    <title>
+		{% if choix == "SelectEdit" %}
+			SCOOLAPP - Students - Select Student to modifie
+		{% elif choix == "SelectDel" %}
+			SCOOLAPP - Students - Select Student to delete
+		{% elif choix == "SelectAbout" %}
+			SCOOLAPP - Students - Select Student For About
+		{% else %}
+			SCOOLAPP - Students - All Students 
+		{% endif %}
+	</title>
 	<!-- Datatable -->
     <link href="{% static 'SCOOLAPP/vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
 {% endblock %}
@@ -13,14 +23,32 @@
 		<div class="row page-titles mx-0">
 			<div class="col-sm-6 p-md-0">
 				<div class="welcome-text">
-					<h4>All Student</h4>
+					<h4>
+						{% if choix == "SelectEdit" %}
+							Select Student to modifie
+						{% elif choix == "SelectDel" %}
+							Select Student to delete
+						{% elif choix == "SelectAbout" %}
+							Select Student For About
+						{% else %}
+							All Student 
+						{% endif %}
+					</h4>
 				</div>
 			</div>
 			<div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{$ url 'Acceuil' $}">Acceuil</a></li>
+					<li class="breadcrumb-item"><a href="{% url 'acceuilAdmin' %}">Acceuil</a></li>
 					<li class="breadcrumb-item active"><a href="javascript:void(0);">Students</a></li>
-					<li class="breadcrumb-item active"><a href="javascript:void(0);">All Student</a></li>
+					{% if choix == "SelectEdit" %}
+						<li class="breadcrumb-item active"><a href="javascript:void(0);">Select-to-Modifie-Student</a></li>
+					{% elif choix == "SelectDel" %}
+						<li class="breadcrumb-item active"><a href="javascript:void(0);">Select-to-delete-Student</a></li>
+					{% elif choix == "SelectAbout" %}
+						<li class="breadcrumb-item active"><a href="javascript:void(0);">Select-Student-For About</a></li>
+					{% else %}
+						<li class="breadcrumb-item active"><a href="javascript:void(0);">All Student</a></li>
+					{% endif %}
 				</ol>
 			</div>
 		</div>
@@ -32,7 +60,9 @@
 						<div class="card">
 							<div class="card-header">
 								<h4 class="card-title">All Students List  </h4>
-								<a href="{% url 'FormAddEleve' %}" class="btn btn-primary">+ Add new</a>
+								{% if not choix %}
+									<a href="{% url 'FormAddEleve' %}" class="btn btn-primary">+ Add new</a>
+								{% endif %}
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
@@ -54,14 +84,23 @@
 												<tr>
 													<td><img class="rounded-circle" width="35" src="{{elev.photoElev.url}}" alt=""></td>
 													<td><strong>{{elev.MatriculeElev}}</strong></td>
-													<td>{{elev.nomElev}}</td>
-													<td>{{elev.prenomElev}}</td>
+													<td id="{{elev.id}}-N">{{elev.nomElev}}</td>
+													<td id="{{elev.id}}-P">{{elev.prenomElev}}</td>
 													<td><a href="javascript:void(0);"><strong>{{elev.TelephoneElev}}</strong></a></td>
 													<td>{{elev.ClassElev}}</td>
 													<td>{{elev.dateNaisElev}}</td>
 													<td>
-														<a href="{%url 'ModifierElev' elev.id %}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-														<a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
+														{% if choix == "SelectEdit" %}
+															<a href="{%url 'ModifierElev' elev.id %}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
+														{% elif choix == "SelectDel" %}
+															<a onclick="confirmDeletion('{{elev.id}}')" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
+														{% elif choix == "SelectAbout" %}
+															<a href="{%url 'details_Eleve' elev.id %}"><button type="button" class="btn btn-sm btn-primary">Voir plus</button></a>
+														{% else %}
+															<a href="{%url 'ModifierElev' elev.id %}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
+															<a onclick="confirmDeletion('{{elev.id}}')" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
+														{% endif %}
+														
 													</td>												
 												</tr>
 											{% endfor%}
@@ -77,15 +116,10 @@
 		</div>
 	
 	</div>
+
 {% endblock %}
 
 {% block scripts %}
-	<!-- Required vendors -->
-    <script src="{% static 'SCOOLAPP/vendor/global/global.min.js' %}"></script>
-	<script src="{% static 'SCOOLAPP/vendor/bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
-    <script src="{% static 'SCOOLAPP/js/custom.min.js' %}"></script>
-    <script src="{% static 'SCOOLAPP/js/dlabnav-init.js' %}"></script>	
-
 	<!-- Datatable -->
     <script src="{% static 'SCOOLAPP/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'SCOOLAPP/js/plugins-init/datatables.init.js' %}"></script>
@@ -96,4 +130,73 @@
     <script src="{% static 'SCOOLAPP/js/styleSwitcher.js' %}"></script>
 
 
+{% endblock %}
+
+{% block content2 %}  
+    <div id="confirmation1" class="confirm confirm2">
+        <div class="uu">
+            <div class="confirm-main2">
+                <header class="confirm-header">
+                    <div id="out" style="margin-left: 85%;width: 10%;margin-bottom: 10px;"><a href="#"><i class="fa fa-close color-danger"></i></a></div>
+                </header>
+                <section class="confirm-section">
+                    Confirmez-vous les Suppression de <span id="NP" style="color: red;font-weight: bold;">lllk</span> ?
+                </section>
+                <footer class="confirm-footer">
+                    <button class="bout annnulCC" id="annnulCC" > Annuler</button>
+                    <button class="bout confirmCC" id="confirmCC"> Confirmer</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script>
+		var idElv; 
+		function confirmDeletion(idE) {
+			let confirmation = document.getElementById("confirmation1");
+			idElv = idE;
+			console.log(String(idE)+"-P","#####################",String(idE)+"-N")
+			let NomTd = document.getElementById(String(idE)+"-N");
+			let PrenomTd = document.getElementById(String(idE)+"-P");
+			let SpanNP = document.getElementById("NP");
+			var temp = NomTd.innerHTML+" "+PrenomTd.innerHTML;
+			$('#NP').empty();
+			$('#NP').append(temp);
+
+			confirmation.style.display = "block";
+			let main = document.getElementById("bodyy");
+			main.style.filter = "blur(4px)";
+			console.log(idElv)
+			return true
+		}
+        function onSend(){
+			url = "/api/Eleves/deleteElev/"+String(idElv);
+			window.location.href= url
+        }
+ 
+		function oncancel(){
+            confirmation.style.display = "none";
+            let main = document.getElementById("bodyy");
+            main.style.filter = "blur(0)"
+            console.log("annull !!!");
+        }
+        let boutConf = document.getElementById("confirmCC");
+        let confirmation = document.getElementById("confirmation1");
+        let boutAnnul = document.getElementById("annnulCC");
+        let outCroix = document.getElementById("out");
+        boutConf.addEventListener("click", () => {
+            onSend();
+        })
+        outCroix.addEventListener("click", () => {
+            oncancel();
+        })
+        boutAnnul.addEventListener("click", () => {
+            oncancel();
+        })
+        confirmation.addEventListener("click", () => {
+            oncancel();
+        })
+        document
+            .querySelector(".confirm-main2")
+            .addEventListener("click", (e) => e.stopPropagation());
+    </script>
 {% endblock %}

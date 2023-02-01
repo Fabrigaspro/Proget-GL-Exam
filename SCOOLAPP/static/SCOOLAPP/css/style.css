@@ -1,3 +1,4 @@
+{% load static %}
 /*
     Table of Contents
 
@@ -53,18 +54,20 @@
         _page-user-lock
 
 */
-/*$primary  : #7356f1 !default;*/
-@import url("../../css.css");
-@import url("../../css-1.css");
+
+
+/*$primary  : #7356f1 !default;  SweetAlert2.min.css
+@import url(../css.css);
+@import url(../../css-1.css);
 @import url("../../css-2.css");
 @import url("../../css-3.css");
-@import url("../../css-4.css");
+@import url("../../css-4.css");*/
 @import url("../icons/simple-line-icons/css/simple-line-icons.css");
 @import url("../icons/font-awesome-old/css/font-awesome.min.css");
 @import url("../icons/material-design-iconic-font/css/materialdesignicons.min.css");
 @import url("../icons/themify-icons/css/themify-icons.css");
 @import url("../icons/line-awesome/css/line-awesome.min.css");
-@import url("../icons/avasta/css/style.css");
+@import url(../icons/avasta/css/style.css);
 @import url(../vendor/animate/animate.min.css);
 @import url(../vendor/aos/css/aos.min.css);
 @import url(../vendor/perfect-scrollbar/css/perfect-scrollbar.css);
@@ -269,7 +272,7 @@ body {
   text-align: left;
   background-color: #F7F8FA; }
 
-.formul input::placeholder, textarea::placeholder{
+.formul input::placeholder, .formul textarea::placeholder{
     color: red;
     opacity: 1;
 }
@@ -290,26 +293,119 @@ option.traitpoint{
 .confirm2{
     display: none;
 }
+.confirmN{
+  display: none;
+}
 .uu{
     position: relative;
     height: 100%;
 }
+
+.confirm-main1{
+  width: 25%;
+  height: 70%;
+  max-width: 300px;
+  max-height: 700px;
+  border-radius: 18px;
+  text-align: center;
+  margin: 100px 40%;
+  font-size: 16px;
+  background-color: #CFC1C1;
+}
+.confirm-mainN{
+  width: 25%;
+  height: 70%;
+  border-radius: 18px;
+  text-align: center;
+  margin: 100px 40%;
+  font-size: 16px;
+  background-color: #CFC1C1;
+}
+.confirm-headerN{
+  margin: 0 10px;
+  padding-top: 15px;
+  height: 5%;
+}
+.confirm-sectionN{
+  height: 50%;
+  margin: 30px 0;
+  padding: 0 5px;
+  /*background-color: chartreuse;*/
+}
+.confirm-footerN{
+  display: flex;
+  justify-content: space-between;
+  height: 15%;
+  margin-top: 50px;
+}
+
 .confirm-main2{
-    width: 25%;
-    height: 40%;
-    max-width: 300px;
-    max-height: 200px;
+    width: 20%;
+    height: 35%;
     border-radius: 18px;
     text-align: center;
-    margin:15% 40%;
-    font-size: 18px;
+    margin:10% 40%;
+    font-size: 16px;
     background-color: #CFC1C1;
+}
+@media (max-width : 1000px) {
+  .confirm-main2{
+    width: 30%;
+    height: 20%;
+    margin:40% 35%;
+  }
+  .confirm-mainN{
+    width: 80%;
+    height: 70%;
+    margin:10% 10%;
+  } 
+}
+@media (max-width : 933px) {
+  .confirm-main2{
+    width: 25%;
+    height: 20%;
+    margin:40% 37.5%;
+  }
+  .confirm-mainN{
+    width: 40%;
+    height: 40%;
+    margin:30% 30%;
+  } 
+}
+@media (max-width : 540px) {
+  .confirm-main2{
+    width: 50%;
+    height: 30%;
+    margin:50% 25%;
+  } 
+  .confirm-mainN{
+    width: 80%;
+    height: 70%;
+    margin:10% 10%;
+  } 
+}
+@media (max-width : 500px) {
+  .confirm-main2{
+    width: 70%;
+    height: 30%;
+    margin:50% 15%;
+  } 
+  .confirm-mainN{
+    width: 80%;
+    height: 70%;
+    margin:10% 10%;
+  } 
 }
 .confirm-header{
   margin: 0 10px;
   padding-top: 15px;
   height: 20%;
-  /*background-color: darkgoldenrod;*/
+}
+.confirm-section1{
+  height: 20%;
+  margin: 30px 0;
+  padding: 0 5px;
+  /*background-color: chartreuse;*/
 }
 .confirm-section{
   height: 20%;
@@ -321,7 +417,7 @@ option.traitpoint{
   display: flex;
   justify-content: space-between;
   height: 15%;
-  /*background-color: #BBA7A7*/
+  margin-top: 50px;
 }
 
 .bout{
@@ -6580,6 +6676,10 @@ button.bg-dark:focus {
 .ml-4,
 .mx-4 {
   margin-left: 1.5rem !important; }
+
+  .ml-20,
+  .mx-20 {
+    margin-left: 20px !important; }
 
 .m-5 {
   margin: 3rem !important; }

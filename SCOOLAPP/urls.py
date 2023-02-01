@@ -5,35 +5,49 @@ from SCOOLAPP.views import *
 
 
 urlpatterns = [
-    path('', acceuil, name="Acceuil"),
 
-    path('Getdatasclasses/', GetdatasClasses, name="Getdatasclasses"),
-    path('ChangStatclass/', ChangStatclass, name="ChangStatclass"),
-    path('classes/validDelclasses/', validDelclasses, name="validDelclasses"),
-    path('classes/', GestClasses, name="classes"),
-    path('classes/SelctDelClasses/', SelctDelClasses, name="SelctDelClasses"),
-    path('classes/deleteClasses/', deleteClasses, name="deleteClasses"),
+    path('acceuilAdmin/', acceuilAdmin, name="acceuilAdmin"),
+
+    path('GetdatasClasses/', GetdatasClasses, name="GetdatasClasses"),
+    path('classes/', ViewsClasses, name="ViewsClasses"),
     path('classes/FormAddClasses/', FormAddClasses, name="FormAddClasses"),
     path('classes/AddnewClasse/', AddnewClasse, name="AddnewClasse"),
+    path('classes/SearchClassesToModif/', SearchClassesToModif, name="SearchClassesToModif"),
+    path('classes/SearchClassesToDelete/', SearchClassesToDelete, name="SearchClassesToDelete"),
+    path('classes/SearchClassesForAbout/', SearchClassesForAbout, name="SearchClassesForAbout"),
 
     path('GetdatasProfs/', GetdatasProfs, name="GetdatasProfs"),
-    path('Professeurs/', GestProfs, name="Professeurs"),
-    path('ChangStateProf/', ChangStateProf, name="ChangStateProf"), 
-    path('Professeurs/SelctDelProfs/', SelctDelProfs, name="SelctDelProfs"),
-    path('Professeurs/validDelProfs/', validDelProfs, name="validDelProfs"),
-    path('Professeurs/deleteProfs/', deleteProfs, name="deleteProfs"),    
+    path('Professeurs/', ViewsProfs, name="ViewsProfs"),
     path('Professeurs/FormAddProfs/', FormAddProfs, name="FormAddProfs"),
     path('Professeurs/AddnewProf/', AddnewProf, name="AddnewProf"),
+    path('Professeurs/SearchProfsToModif/', SearchProfsToModif, name="SearchProfsToModif"),
+    path('Professeurs/SearchProfsToDelete/', SearchProfsToDelete, name="SearchProfsToDelete"),
+    path('Professeurs/SearchProfsForAbout/', SearchProfsForAbout, name="SearchProfsForAbout"),
+
+
+    path('GetdatasCours/', GetdatasCours, name="GetdatasCours"),
+    path('cours/', ViewsCours, name="ViewsCours"),
+    path('cours/FormAddCours/', FormAddCours, name="FormAddCours"),
+    path('cours/AddnewCours/', AddnewCours, name="AddnewCours"),
+    path('cours/SearchCoursToModif/', SearchCoursToModif, name="SearchCoursToModif"),
+    path('cours/SearchCoursToDelete/', SearchCoursToDelete, name="SearchCoursToDelete"),
+    path('cours/SearchCoursForAbout/', SearchCoursForAbout, name="SearchCoursForAbout"),
+
 
     path('GetdatasEleves/', GetdatasEleves, name="GetdatasEleves"),
-    path('Eleves/', ViewsEleves, name="ViewsEleves"),
-    path('ChangStateEleves/', ChangStateEleves, name="ChangStateEleves"), 
-    path('Eleves/SelctDelEleves/', SelctDelEleves, name="SelctDelEleves"),
-    path('Eleves/validDelEleves/', validDelEleves, name="validDelEleves"),
-    path('Eleves/deleteEleves/', deleteEleves, name="deleteEleves"), 
+    path('Eleves/', ViewsEleves, name="ViewsEleves"), 
     path('Eleves/FormAddEleve/', FormAddEleve, name="FormAddEleve"),
     path('Eleves/AddnewEleve/', AddnewEleve, name="AddnewEleve"),
+    path('Eleves/SearchElevesToModif/', SearchElevesToModif, name="SearchElevesToModif"),
+    path('Eleves/SearchElevesToDelete/', SearchElevesToDelete, name="SearchElevesToDelete"),
+    path('Eleves/SearchElevesForAbout/', SearchElevesForAbout, name="SearchElevesForAbout"),
 
-    path('GetdatasMatieres/', GetdatasMatieres, name="GetdatasMatieres"),
+
+    path('VoirProfileAdmin/', VoirProfileAdmin, name="VoirProfileAdmin"),
+    path('ModifProfileAdmin/', ModifProfileAdmin, name="ModifProfileAdmin"),
+    path('ModifCompteAdmin/', ModifCompteAdmin, name="ModifCompteAdmin"),
+
+
+
 
 ]
