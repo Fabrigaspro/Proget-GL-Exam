@@ -268,7 +268,7 @@ class Eleve(models.Model):
         return self.get_note().count()
     
     def get_MoyElev(self):
-        return self.bulletindenote_set.get().MoyG
+        return self.bulletindenote.MoyG
     
     def get_PourcMoyElev(self):
         return round((self.get_MoyElev()/20)*100, 2)

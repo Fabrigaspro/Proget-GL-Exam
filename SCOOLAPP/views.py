@@ -748,6 +748,7 @@ def CreateWordElev(Request, idE):
     for Elv in AllElevclass:
         newbullletin = BulletinDeNote(eleve=Elv)
         newbullletin.save()
+        newbullletin.Set_MoyGE()
         
     Bulletin = BulletinDeNote.objects.get(eleve=elev)
     dicoMoyByGE = Bulletin.Get_AllMoybyGroupE()

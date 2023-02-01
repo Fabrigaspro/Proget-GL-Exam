@@ -37,7 +37,7 @@ admin.site.register(Matiere, MatiereAdmin)
 
 ####################################################################################################
 class EleveAdmin(admin.ModelAdmin):
-    list_display = ("id","MatriculeElev", "nomElev", "prenomElev","ClassElev","dateNaisElev","TelephoneElev","AdresseElev","photoElev")
+    list_display = ("id","MatriculeElev", "nomElev","get_MoyElev", "prenomElev","ClassElev","dateNaisElev","TelephoneElev","AdresseElev","photoElev")
     search_fields = ["nomElev"]
 
 admin.site.register(Eleve, EleveAdmin)
